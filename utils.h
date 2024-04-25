@@ -35,12 +35,10 @@ template <typename Type>
 bool isIdentity(Matrix<Type> const& matrix, Type precision) {
     for (size_t i = 0; i < matrix.height(); ++i) {
         for (size_t j = 0; j < matrix.width(); ++j) {
-            bool isOne = (1 - precision) <= matrix.get()[i * matrix.width() + j]
-                      && matrix.get()[i * matrix.width() + j] <= (1 + precision);
-            bool isZero = -precision <= matrix.get()[i * matrix.width() + j]
-                       && matrix.get()[i * matrix.width() + j] <= precision;
+            bool isOne = (1 - precision) <= matrix.at(i, j) && matrix.at(i, j) <= (1 + precision);
+            bool isZero = -precision <= matrix.at(i, j) && matrix.at(i, j) <= precision;
             if ((i == j && !isOne) || (i != j && !isZero)) {
-                    std::cout << i << ", " << j << ": " << matrix.get()[i * matrix.width() + j] << std::endl;
+                    std::cout << i << ", " << j << ": " << matrix.at(i, j) << std::endl;
                     return false;
             }
         }
@@ -52,12 +50,10 @@ template <typename Type>
 bool isTriangular(Matrix<Type> const& matrix, Type precision) {
     for (size_t i = 0; i < matrix.height(); ++i) {
         for (size_t j = 0; j <= i; ++j) {
-            bool isOne = (1 - precision) <= matrix.get()[i * matrix.width() + j]
-                      && matrix.get()[i * matrix.width() + j] <= (1 + precision);
-            bool isZero = -precision <= matrix.get()[i * matrix.width() + j]
-                       && matrix.get()[i * matrix.width() + j] <= precision;
+            bool isOne = (1 - precision) <= matrix.at(i, j) && matrix.at(i, j) <= (1 + precision);
+            bool isZero = -precision <= matrix.at(i, j) && matrix.at(i, j) <= precision;
             if ((i == j && !isOne) || (i != j && !isZero)) {
-                    std::cout << i << ", " << j << ": " << matrix.get()[i * matrix.width() + j] << std::endl;
+                    std::cout << i << ", " << j << ": " << matrix.at(i, j) << std::endl;
                     return false;
             }
         }
