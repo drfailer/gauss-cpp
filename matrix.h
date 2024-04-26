@@ -11,6 +11,7 @@ class Matrix {
 
     Type& at(size_t i, size_t j = 0) { return matrix_[i * width_ + j]; }
     Type at(size_t i, size_t j = 0) const { return matrix_[i * width_ + j]; }
+    Type *line(size_t i) const { return &matrix_[i * width_]; }
     size_t width() const { return width_; }
     size_t height() const { return height_; }
 
