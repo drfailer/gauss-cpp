@@ -3,6 +3,40 @@
 #include <cstddef>
 #include <random>
 #include "matrix.h"
+#include <chrono>
+#define timerStart() auto _start = std::chrono::system_clock::now();
+#define timerEnd() auto _end = std::chrono::system_clock::now();
+#define timerCount()                                                           \
+    std::chrono::duration_cast<std::chrono::microseconds>(_end - _start)       \
+            .count() / 1.0e6
+
+/******************************************************************************/
+/*                                   config                                   */
+/******************************************************************************/
+
+struct Config {
+    size_t size;
+    bool execPar;
+    bool print;
+};
+
+inline void parseArgs(int argc, char **argv, Config &config) {
+    for (int i = 1; i < argc; ++i) {
+        std::string opt = argv[i];
+        if (opt == "-s") {
+            std::string value = argv[++i];
+            config.size = atoi(value.c_str());
+        } else if (opt == "-p") {
+            config.execPar = true;
+        } else if (opt == "-print") {
+            config.print = true;
+        }
+    }
+}
+
+/******************************************************************************/
+/*                              generate problem                              */
+/******************************************************************************/
 
 template <typename Type>
 void generateRandomProblem(size_t nbVariables, Type *matrix, Type *vector, Type *variables) {
@@ -30,6 +64,10 @@ void generateRandomProblem(size_t nbVariables, Type *matrix, Type *vector, Type 
         vector[i] = sum;
     }
 }
+
+/******************************************************************************/
+/*                               test functions                               */
+/******************************************************************************/
 
 template <typename Type>
 bool isIdentity(Matrix<Type> const& matrix, Type precision) {
